@@ -66,26 +66,30 @@ void NeckWidget::paintEvent(QPaintEvent *)
 
 void NeckWidget::mousePressEvent(QMouseEvent *event)
 {
-    const double scale = GetScale(m_neckPixmap.size());
-    if (scale <= 0) return;
+    // only left mouse for setting notes
+    if (event && event->buttons() & Qt::LeftButton)
+    {
+        const double scale = GetScale(m_neckPixmap.size());
+        if (scale <= 0) return;
 
-    // calculate neck position
-    int neckX = (double)(event->pos().x()) / scale;
-    int neckY = (double)(event->pos().y()) / scale;
+        // calculate neck position
+        int neckX = (double)(event->pos().x()) / scale;
+        int neckY = (double)(event->pos().y()) / scale;
 
-    // calculate string num (starting from 0)
-    int stringNum = neckY - Drawer::getNeckStaringPoint().y() - Drawer::GetStringVerticalOffset(0) + Drawer::GetHeightBetweenStrings() / 2;
-    if (stringNum < 0) return;
-    stringNum = stringNum / Drawer::GetHeightBetweenStrings();
-    if (stringNum < 0) return;
-    if (stringNum >= (int)m_neck.GetStrings().size()) return;
+        // calculate string num (starting from 0)
+        int stringNum = neckY - Drawer::getNeckStaringPoint().y() - Drawer::GetStringVerticalOffset(0) + Drawer::GetHeightBetweenStrings() / 2;
+        if (stringNum < 0) return;
+        stringNum = stringNum / Drawer::GetHeightBetweenStrings();
+        if (stringNum < 0) return;
+        if (stringNum >= (int)m_neck.GetStrings().size()) return;
 
-    // calculate fret num
-    int fretNum = neckX - Drawer::getNeckStaringPoint().x() - Drawer::getNeckLeftStartPoint() + Drawer::getNeckFretWidth();
-    if (fretNum < 0) fretNum = 0;
-    fretNum = fretNum / Drawer::getNeckFretWidth();
+        // calculate fret num
+        int fretNum = neckX - Drawer::getNeckStaringPoint().x() - Drawer::getNeckLeftStartPoint() + Drawer::getNeckFretWidth();
+        if (fretNum < 0) fretNum = 0;
+        fretNum = fretNum / Drawer::getNeckFretWidth();
 
-    emit OnFretClicked(stringNum, fretNum);
+        emit OnFretClicked(stringNum, fretNum);
+    }
 }
 
 void NeckWidget::contextMenuEvent(QContextMenuEvent *event)
