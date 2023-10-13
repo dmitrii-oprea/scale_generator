@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Chords</string>
+   <string>Scale generator, chords</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resources/images.qrc">
+    <normaloff>:/img/main_icon2.png</normaloff>:/img/main_icon2.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -609,6 +613,8 @@
    <header>widgets/scaletypewidget.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resources/images.qrc"/>
+ </resources>
  <connections/>
 </ui>

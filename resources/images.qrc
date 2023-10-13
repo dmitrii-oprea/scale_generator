@@ -2,4 +2,7 @@
     <qresource prefix="/img">
         <file>img/neck_bw4.png</file>
     </qresource>
+    <qresource prefix="/">
+        <file>img/main_icon2.png</file>
+    </qresource>
 </RCC>
