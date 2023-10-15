@@ -5,8 +5,11 @@
 #include <QClipboard>
 #include <QMenu>
 #include <QContextMenuEvent>
+#include <QPainter>
+#include <QFont>
 
 #define MAX_WIDGET_HEIGHT ((double)(100))
+#define CHORD_EXTRA_HEIGHT (50)
 
 ChordWidget::ChordWidget(const Neck &neck, std::optional<NoteType> baseNote, const std::string &chordName, QWidget *parent)
     : QFrame(parent)
@@ -22,8 +25,8 @@ ChordWidget::ChordWidget(const Neck &neck, std::optional<NoteType> baseNote, con
     // create context menu
     m_actionCopyImage = new QAction("Copy image");
     connect(m_actionCopyImage, &QAction::triggered, this, &ChordWidget::CopyImageToClipboard);
-    m_actionCopyImageHalfSize = new QAction("Copy image (1/2 size)");
-    connect(m_actionCopyImageHalfSize, &QAction::triggered, this, &ChordWidget::CopyImageToClipboardHalfSize);
+    m_actionCopyImageHalfSizeAndChordName = new QAction("Copy small image (1/2 size) and chord name");
+    connect(m_actionCopyImageHalfSizeAndChordName, &QAction::triggered, this, &ChordWidget::CopyImageToClipboardHalfSizeAndChordName);
 }
 
 QSize ChordWidget::GetIntendedSize() const
@@ -46,7 +49,7 @@ void ChordWidget::contextMenuEvent(QContextMenuEvent *event)
 {
     QMenu menu(this);
     menu.addAction(m_actionCopyImage);
-    menu.addAction(m_actionCopyImageHalfSize);
+    menu.addAction(m_actionCopyImageHalfSizeAndChordName);
     menu.exec(event->globalPos());
 }
 
@@ -73,14 +76,40 @@ void ChordWidget::CopyImageToClipboard()
     QApplication::clipboard()->setImage(image, QClipboard::Clipboard);
 }
 
-void ChordWidget::CopyImageToClipboardHalfSize()
+void ChordWidget::CopyImageToClipboardHalfSizeAndChordName()
 {
     QImage image = m_neckPixmap.toImage();
     if (image.isNull()) return;
 
-    image = image.scaled(image.width() / 2, image.height() / 2,
+    // font
+    QFont chordNameFont;
+    chordNameFont.setPixelSize(40);
+    chordNameFont.setBold(true);
+    QFontMetrics fm(chordNameFont);
+
+    // new image -> clear
+    QImage extendedImage(image.width(), image.height() + CHORD_EXTRA_HEIGHT, image.format());
+    QPainter painter(&extendedImage);
+    painter.setBrush(Qt::white);
+    painter.setPen(Qt::white);
+    painter.setFont(chordNameFont);
+    painter.drawRect(extendedImage.rect());
+
+    // draw chord
+    painter.drawImage(0, CHORD_EXTRA_HEIGHT, image);
+
+    // add chord name
+    painter.setPen(Qt::black);
+    QString chordName = QString::fromStdString(m_chordName);
+    int xPos = extendedImage.width() / 2 - fm.horizontalAdvance(chordName) / 2;
+    int yPos = fm.height() * 0.7;
+    painter.drawText(xPos, yPos, chordName);
+    painter.end();
+
+    // half size
+    extendedImage = extendedImage.scaled(extendedImage.width() / 2, extendedImage.height() / 2,
                          Qt::AspectRatioMode::KeepAspectRatio,
                          Qt::TransformationMode::SmoothTransformation);
 
-    QApplication::clipboard()->setImage(image, QClipboard::Clipboard);
+    QApplication::clipboard()->setImage(extendedImage, QClipboard::Clipboard);
 }

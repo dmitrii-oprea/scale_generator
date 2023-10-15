@@ -21,13 +21,13 @@ protected:
 private:
     void InitSizes();
     void CopyImageToClipboard();
-    void CopyImageToClipboardHalfSize();
+    void CopyImageToClipboardHalfSizeAndChordName();
 
     Neck m_neck;
     QPixmap m_neckPixmap;
     std::string m_chordName;
     QAction *m_actionCopyImage;
-    QAction *m_actionCopyImageHalfSize;
+    QAction *m_actionCopyImageHalfSizeAndChordName;
     QSize m_intendedSize;
 };
 
