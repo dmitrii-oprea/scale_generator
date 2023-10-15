@@ -194,27 +194,8 @@ void NeckWidgetTrunc::SetNeck(Neck &neck, std::optional<NoteType> baseNote)
 {
     NeckWidget::SetNeck(neck, baseNote);
 
-    // calculate range
-    std::pair<int, int> rangeTruncked = Drawer::GetDefaultFretRange();
-    std::swap(rangeTruncked.first, rangeTruncked.second);
-    auto& strings = neck.GetStrings();
-    for (auto& string : strings)
-    {
-        for (int i = 1; i < string.getFretNum(); i++)
-        {
-            if (string.isNoteSelected(i))
-            {
-                rangeTruncked.first = std::min(rangeTruncked.first, i);
-                rangeTruncked.second = std::max(rangeTruncked.second, i);
-            }
-        }
-    }
-
-    // corrections
-    if (rangeTruncked.first <= 2) rangeTruncked.first = 0;
-
-    // save result
-    m_drawRange = rangeTruncked;
+    // range to draw this chord
+    m_drawRange = neck.GetNeckRangeTrunked();
 
     // tooltip - chord detector
     UpdateTooltip();
