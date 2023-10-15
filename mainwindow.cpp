@@ -23,8 +23,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     // chord database
-    connect(ui->ChordDatabase_BaseNoteSelector, &QComboBox::currentIndexChanged, this, &MainWindow::ChordDatabase_ShowChord);
-    connect(ui->ChordDatabase_ChordTypeSelector, &QComboBox::currentIndexChanged, this, &MainWindow::ChordDatabase_ShowChord);
+    connect(ui->ChordDatabase_BaseNoteSelector, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::ChordDatabase_ShowChord);
+    connect(ui->ChordDatabase_ChordTypeSelector, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::ChordDatabase_ShowChord);
     ChordDatabase_ShowChord();
 
     // chord guesser
@@ -37,13 +37,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->ScaleIdentifier_NotesSelector, &NeckWidgetNotesSelector::OnFretManuallyUpdated, this, &MainWindow::ScaleIdentifier_UpdateUncompletedScales);
 
     // scale generator
-    connect(ui->ScaleGenerator_SelectBaseNote, &QComboBox::currentIndexChanged, this, &MainWindow::ScaleGenerator_Update);
-    connect(ui->ScaleGenerator_SelectScale, &QComboBox::currentIndexChanged, this, &MainWindow::ScaleGenerator_Update);
+    connect(ui->ScaleGenerator_SelectBaseNote, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::ScaleGenerator_Update);
+    connect(ui->ScaleGenerator_SelectScale, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::ScaleGenerator_Update);
     ScaleGenerator_Update();
 
     // dev
-    connect(ui->Dev_BaseNoteSelector, &QComboBox::currentIndexChanged, this, &MainWindow::Dev_ShowChord);
-    connect(ui->Dev_ChordTypeSelector, &QComboBox::currentIndexChanged, this, &MainWindow::Dev_ShowChord);
+    connect(ui->Dev_BaseNoteSelector, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::Dev_ShowChord);
+    connect(ui->Dev_ChordTypeSelector, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::Dev_ShowChord);
     connect(ui->Dev_ChordSelector, &NeckWidgetChordSelector::OnFretManuallyUpdated, this, &MainWindow::Dev_UpdateNeckNotation);
     Dev_ShowChord();
 }
