@@ -22,7 +22,9 @@ const std::vector<ChordType>& AllChordsTypes()
         ChordType::MajorAdd11,
         ChordType::MinorAdd11,
         ChordType::Sus2,
+        ChordType::Sus2Addb6,
         ChordType::Sus4,
+        ChordType::Sus4Addb6,
         ChordType::Aug,
         ChordType::MajorAddb6,
         ChordType::MinorAddb6,
@@ -56,7 +58,9 @@ std::string ChordTypeToString(ChordType type)
     case ChordType::MajorAdd11: return "major add11";
     case ChordType::MinorAdd11: return "minor add11";
     case ChordType::Sus2: return "sus2";
+    case ChordType::Sus2Addb6: return "sus2 addb6";
     case ChordType::Sus4: return "sus4";
+    case ChordType::Sus4Addb6: return "sus4 addb6";
     case ChordType::Aug: return "aug";
     case ChordType::MajorAddb6: return "major addb6";
     case ChordType::MinorAddb6: return "minor addb6";
@@ -90,7 +94,9 @@ std::string ChordTypeToSuffixString(ChordType type)
     case ChordType::MajorAdd11: return "add11";
     case ChordType::MinorAdd11: return "madd11";
     case ChordType::Sus2: return "sus2";
+    case ChordType::Sus2Addb6: return "sus2addb6";
     case ChordType::Sus4: return "sus4";
+    case ChordType::Sus4Addb6: return "sus4addb6";
     case ChordType::Aug: return "aug";
     case ChordType::MajorAddb6: return "addb6";
     case ChordType::MinorAddb6: return "maddb6";

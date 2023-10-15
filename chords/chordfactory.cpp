@@ -110,10 +110,22 @@ std::list<int> ChordFactory::GenerateChordOffsets(ChordType chordType)
         result.push_back(2);
         result.push_back(7);
         break;
+    case ChordType::Sus2Addb6:
+        result.push_back(0);
+        result.push_back(2);
+        result.push_back(7);
+        result.push_back(8);
+        break;
     case ChordType::Sus4:
         result.push_back(0);
         result.push_back(5);
         result.push_back(7);
+        break;
+    case ChordType::Sus4Addb6:
+        result.push_back(0);
+        result.push_back(5);
+        result.push_back(7);
+        result.push_back(8);
         break;
     case ChordType::Aug:
         result.push_back(0);
