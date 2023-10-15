@@ -1,65 +1,110 @@
 #include "chordlistwidget.h"
 #include "draw/drawer.h"
 #include <QPainter>
-
-#define START_POINT (5)
-#define SCALE ((double)(0.5))
-#define MARGIN (20)
+#include <QDebug>
 
 ChordListWidget::ChordListWidget(QWidget *parent)
     : QFrame(parent)
 {
+    this->setContentsMargins(0, 0, 0, 0);
+    m_mainLayout = new QVBoxLayout;
+    m_mainLayout->setContentsMargins(0, 0, 0, 0);
+    setLayout(m_mainLayout);
+
+    // handle resize event
+    m_resizeTimer.setSingleShot(true);
+    connect(&m_resizeTimer, &QTimer::timeout, this, &ChordListWidget::ResizeDone);
 }
 
 void ChordListWidget::SetNeckList(const std::list<Neck> &neckLst, std::optional<NoteType> baseNoteType)
 {
-    chordImages.clear();
-    for (const auto& neck : neckLst)
-    {
-        auto range = neck.GetNeckRangeTrunked();
-
-        Neck n(neck);
-        chordImages.push_back(Drawer::GenerateNeckImage(n, baseNoteType, range));
-    }
+    SetNeckList(neckLst, baseNoteType, "");
 }
 
-void ChordListWidget::paintEvent(QPaintEvent *)
+void ChordListWidget::SetNeckList(const std::list<Neck> &neckLst, std::optional<NoteType> baseNoteType, const std::string &chordName)
 {
-    QPainter painter(this);
-    painter.setRenderHint(QPainter::SmoothPixmapTransform);
-    painter.setRenderHint(QPainter::Antialiasing);
-    painter.setRenderHint(QPainter::TextAntialiasing);
-
-    // background
-    painter.setBrush(Qt::lightGray);
-    painter.drawRect(-1, -1, this->width() + 2, this->height() + 2);
-
-    int x = START_POINT;
-    int y = START_POINT;
-
-    painter.scale(SCALE, SCALE);
-
-    for (auto it = chordImages.begin(); it != chordImages.end(); ++it)
+    ClearWidgetList();
+    for (auto &neck : neckLst)
     {
-        const auto& image = *it;
-        painter.drawPixmap(x, y, image);
+        auto widget = new ChordWidget(neck, baseNoteType, chordName);
+        m_widgets.push_back(widget);
+    }
+    UpdateWidgetsInLayout();
+}
 
-        x += image.width() + MARGIN;
+void ChordListWidget::resizeEvent(QResizeEvent *event)
+{
+    m_resizeTimer.start(200);
+    QWidget::resizeEvent(event);
+}
 
-        // check if next image can be placed next to the right
-        auto nextIt = it;
-        nextIt++;
-        if (nextIt != chordImages.end())
+void ChordListWidget::ClearWidgetList()
+{
+    for (auto widget : m_widgets)
+    {
+        delete widget;
+    }
+    m_widgets.clear();
+}
+
+void ChordListWidget::UpdateWidgetsInLayout()
+{
+    // clean, but widgets are not deleted
+    while (auto verticalLayoutItem = m_mainLayout->takeAt(0))
+    {
+        if (auto horizontalLayout = verticalLayoutItem->layout())
         {
-            const auto& nextImage = *nextIt;
-            int nextX = x + MARGIN + nextImage.width();
-            if ((double)nextX * SCALE > this->width())
+            while (auto horizontalLayoutItem = horizontalLayout->takeAt(0))
             {
-                x = START_POINT;
-                y += image.height() + MARGIN;
+                delete horizontalLayoutItem;
             }
         }
+        delete verticalLayoutItem;
     }
 
-    painter.end();
+    // create another layout struture
+    auto widgetIt = m_widgets.begin();
+    int nextVerticalLayoutIndex = 0;
+    while (widgetIt != m_widgets.end())
+    {
+        // create horizontal layout
+        auto horizontalLayout = new QHBoxLayout;
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        m_mainLayout->insertLayout(nextVerticalLayoutIndex, horizontalLayout);
+
+        // insert widgets until it can
+        int nextHorizontalLayoutIndex = 0;
+        int currentHorizontalCursonPos = 0;
+        do
+        {
+            horizontalLayout->insertWidget(nextHorizontalLayoutIndex, *widgetIt, 1);
+            currentHorizontalCursonPos += (*widgetIt)->GetIntendedSize().width();
+            nextHorizontalLayoutIndex++;
+            widgetIt++;
+
+            // no more widgets
+            if (widgetIt == m_widgets.end())
+            {
+                break;
+            }
+
+            // next widget can be placed in the same row?
+            if (currentHorizontalCursonPos  + (*widgetIt)->GetIntendedSize().width() + 50 > this->width())
+            {
+                break;
+            }
+        } while (true);
+
+        // insert stretch in the end to have all chords alighned to the left
+        horizontalLayout->addStretch();
+        nextVerticalLayoutIndex++;
+    }
+
+    // insert stretch in the end to have all chords alighned to the top
+    m_mainLayout->addStretch();
+}
+
+void ChordListWidget::ResizeDone()
+{
+    UpdateWidgetsInLayout();
 }

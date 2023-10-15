@@ -28,6 +28,7 @@ SOURCES += \
     scales/scaleguesser.cpp \
     widgets/chordlistwidget.cpp \
     widgets/chordtypewidget.cpp \
+    widgets/chordwidget.cpp \
     widgets/neckwidget.cpp \
     widgets/notesvisualizerwidget.cpp \
     widgets/notetypewidget.cpp \
@@ -49,6 +50,7 @@ HEADERS += \
     scales/scaleguesser.h \
     widgets/chordlistwidget.h \
     widgets/chordtypewidget.h \
+    widgets/chordwidget.h \
     widgets/neckwidget.h \
     widgets/notesvisualizerwidget.h \
     widgets/notetypewidget.h \

@@ -173,7 +173,7 @@ void MainWindow::ChordDatabase_ShowChord()
     {
         neckLst.push_back(NeckEncoder::StringToNeck(notation));
     }
-    ui->ChordDatabase_ChordList->SetNeckList(neckLst, baseNote);
+    ui->ChordDatabase_ChordList->SetNeckList(neckLst, baseNote, chord.GetName());
     ui->ChordDatabase_ChordList->update();
 
     // update notes visualizer

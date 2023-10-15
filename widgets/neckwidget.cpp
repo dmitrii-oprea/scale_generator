@@ -20,7 +20,7 @@ NeckWidget::NeckWidget(QWidget *parent)
     m_neckPixmap = Drawer::GenerateNeckImage(m_neck, m_baseNote, m_drawRange);
 }
 
-void NeckWidget::SetNeck(Neck &neck, std::optional<NoteType> baseNote)
+void NeckWidget::SetNeck(const Neck &neck, std::optional<NoteType> baseNote)
 {
     m_neck = neck;
     m_baseNote = baseNote;
@@ -185,38 +185,6 @@ void NeckWidgetChordSelector::HandleFretClicked(int stringNum, int fretNum)
     emit OnFretManuallyUpdated();
 }
 
-NeckWidgetTrunc::NeckWidgetTrunc(QWidget *parent)
-    : NeckWidget(parent)
-{
-}
-
-void NeckWidgetTrunc::SetNeck(Neck &neck, std::optional<NoteType> baseNote)
-{
-    NeckWidget::SetNeck(neck, baseNote);
-
-    // range to draw this chord
-    m_drawRange = neck.GetNeckRangeTrunked();
-
-    // tooltip - chord detector
-    UpdateTooltip();
-}
-
-void NeckWidgetTrunc::UpdateTooltip()
-{
-    // Get all chord notes
-    Chord chord = m_neck.toChord();
-
-    // guess the chord
-    auto guessedChords = m_chordGuesser.Guess(chord);
-    QString guessedChordsStr;
-    for (const auto& chord : guessedChords)
-    {
-        guessedChordsStr += QString::fromStdString(chord.GetName()) + " ";
-    }
-
-    this->setToolTip(guessedChordsStr);
-}
-
 NeckWidgetNotesSelector::NeckWidgetNotesSelector(QWidget *parent)
     : NeckWidget(parent)
 {
@@ -241,4 +209,36 @@ void NeckWidgetNotesSelector::HandleFretClicked(int stringNum, int fretNum)
 
     this->update();
     emit OnFretManuallyUpdated();
+}
+
+NeckWidgetTrunc::NeckWidgetTrunc(QWidget *parent)
+    : NeckWidget(parent)
+{
+}
+
+void NeckWidgetTrunc::SetNeck(const Neck &neck, std::optional<NoteType> baseNote)
+{
+    // range to draw this chord
+    m_drawRange = neck.GetNeckRangeTrunked();
+
+    NeckWidget::SetNeck(neck, baseNote);
+
+    // tooltip - chord detector
+    UpdateTooltip();
+}
+
+void NeckWidgetTrunc::UpdateTooltip()
+{
+    // Get all chord notes
+    Chord chord = m_neck.toChord();
+
+    // guess the chord
+    auto guessedChords = m_chordGuesser.Guess(chord);
+    QString guessedChordsStr;
+    for (const auto& chord : guessedChords)
+    {
+        guessedChordsStr += QString::fromStdString(chord.GetName()) + " ";
+    }
+
+    this->setToolTip(guessedChordsStr);
 }

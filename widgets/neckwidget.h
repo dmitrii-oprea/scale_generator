@@ -24,7 +24,7 @@ protected:
 public:
     explicit NeckWidget(QWidget* parent = nullptr);
     virtual ~NeckWidget() = default;
-    virtual void SetNeck(Neck& neck, std::optional<NoteType> baseNote);
+    virtual void SetNeck(const Neck& neck, std::optional<NoteType> baseNote);
     Neck& GetNeck();
 
     void recalculateMinimumHeight();
@@ -82,7 +82,7 @@ public:
     explicit NeckWidgetTrunc(QWidget* parent = nullptr);
     virtual ~NeckWidgetTrunc() = default;
 
-    void SetNeck(Neck &neck, std::optional<NoteType> baseNote) override;
+    void SetNeck(const Neck &neck, std::optional<NoteType> baseNote) override;
 
 private:
     void UpdateTooltip();
