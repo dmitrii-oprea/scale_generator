@@ -10,6 +10,7 @@
 
 #define MAX_WIDGET_HEIGHT ((double)(100))
 #define CHORD_EXTRA_HEIGHT (50)
+#define SMALLER_IMAGE_COEF ((double)0.4)
 
 ChordWidget::ChordWidget(const Neck &neck, std::optional<NoteType> baseNote, const std::string &chordName, QWidget *parent)
     : QFrame(parent)
@@ -25,8 +26,8 @@ ChordWidget::ChordWidget(const Neck &neck, std::optional<NoteType> baseNote, con
     // create context menu
     m_actionCopyImage = new QAction("Copy image");
     connect(m_actionCopyImage, &QAction::triggered, this, &ChordWidget::CopyImageToClipboard);
-    m_actionCopyImageHalfSizeAndChordName = new QAction("Copy small image (1/2 size) and chord name");
-    connect(m_actionCopyImageHalfSizeAndChordName, &QAction::triggered, this, &ChordWidget::CopyImageToClipboardHalfSizeAndChordName);
+    m_actionCopyImageSmallSizeAndChordName = new QAction("Copy small image + chord name");
+    connect(m_actionCopyImageSmallSizeAndChordName, &QAction::triggered, this, &ChordWidget::CopyImageToClipboardSmallSizeAndChordName);
 }
 
 QSize ChordWidget::GetIntendedSize() const
@@ -49,7 +50,7 @@ void ChordWidget::contextMenuEvent(QContextMenuEvent *event)
 {
     QMenu menu(this);
     menu.addAction(m_actionCopyImage);
-    menu.addAction(m_actionCopyImageHalfSizeAndChordName);
+    menu.addAction(m_actionCopyImageSmallSizeAndChordName);
     menu.exec(event->globalPos());
 }
 
@@ -76,7 +77,7 @@ void ChordWidget::CopyImageToClipboard()
     QApplication::clipboard()->setImage(image, QClipboard::Clipboard);
 }
 
-void ChordWidget::CopyImageToClipboardHalfSizeAndChordName()
+void ChordWidget::CopyImageToClipboardSmallSizeAndChordName()
 {
     QImage image = m_neckPixmap.toImage();
     if (image.isNull()) return;
@@ -106,8 +107,8 @@ void ChordWidget::CopyImageToClipboardHalfSizeAndChordName()
     painter.drawText(xPos, yPos, chordName);
     painter.end();
 
-    // half size
-    extendedImage = extendedImage.scaled(extendedImage.width() / 2, extendedImage.height() / 2,
+    // smaller size
+    extendedImage = extendedImage.scaled(extendedImage.width() * SMALLER_IMAGE_COEF, extendedImage.height() * SMALLER_IMAGE_COEF,
                          Qt::AspectRatioMode::KeepAspectRatio,
                          Qt::TransformationMode::SmoothTransformation);
 
