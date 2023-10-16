@@ -39,7 +39,9 @@ enum class ChordType
     MajorAddb9,
     MinorAddb9,
     MajorAdds11,
-    _5Adds11
+    _5Adds11,
+    MajorMaj7Adds11,
+    MajorMaj7sus2
 };
 
 std::string ChordTypeToString(ChordType type);

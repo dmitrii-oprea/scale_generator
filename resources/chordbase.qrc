@@ -336,5 +336,7 @@
         <file>chordbase/F#/F#sus4addb6.txt</file>
         <file>chordbase/G/Gsus4addb6.txt</file>
         <file>chordbase/G#/G#sus4addb6.txt</file>
+        <file>chordbase/F/Fmaj7add#11.txt</file>
+        <file>chordbase/F/Fmaj7sus2.txt</file>
     </qresource>
 </RCC>

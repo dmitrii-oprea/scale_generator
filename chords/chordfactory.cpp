@@ -167,6 +167,19 @@ std::list<int> ChordFactory::GenerateChordOffsets(ChordType chordType)
         result.push_back(7);
         result.push_back(12 + 6);
         break;
+    case ChordType::MajorMaj7Adds11:
+        result.push_back(0);
+        result.push_back(4);
+        result.push_back(7);
+        result.push_back(11);
+        result.push_back(12 + 6);
+        break;
+    case ChordType::MajorMaj7sus2:
+        result.push_back(0);
+        result.push_back(2);
+        result.push_back(7);
+        result.push_back(11);
+        break;
     }
 
     return result;
