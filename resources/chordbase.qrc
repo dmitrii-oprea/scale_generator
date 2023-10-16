@@ -312,5 +312,17 @@
         <file>chordbase/G/Gadd#11.txt</file>
         <file>chordbase/G#/G#5add#11.txt</file>
         <file>chordbase/G#/G#add#11.txt</file>
+        <file>chordbase/A/Asus2addb6.txt</file>
+        <file>chordbase/A#/A#sus2addb6.txt</file>
+        <file>chordbase/B/Bsus2addb6.txt</file>
+        <file>chordbase/C/Csus2addb6.txt</file>
+        <file>chordbase/C#/C#sus2addb6.txt</file>
+        <file>chordbase/D/Dsus2addb6.txt</file>
+        <file>chordbase/D#/D#sus2addb6.txt</file>
+        <file>chordbase/E/Esus2addb6.txt</file>
+        <file>chordbase/F/Fsus2addb6.txt</file>
+        <file>chordbase/F#/F#sus2addb6.txt</file>
+        <file>chordbase/G/Gsus2addb6.txt</file>
+        <file>chordbase/G#/G#sus2addb6.txt</file>
     </qresource>
 </RCC>
