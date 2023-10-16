@@ -37,6 +37,7 @@ private:
     void ScaleGenerator_UpdateChordsList();
     void Dev_ShowChord();
     void Dev_UpdateNeckNotation();
+    void Dev_UpdateStatistics();
 
     Ui::MainWindow *ui;
     ChordGuesser m_chordGuesser;

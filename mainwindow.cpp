@@ -46,6 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->Dev_ChordTypeSelector, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::Dev_ShowChord);
     connect(ui->Dev_ChordSelector, &NeckWidgetChordSelector::OnFretManuallyUpdated, this, &MainWindow::Dev_UpdateNeckNotation);
     Dev_ShowChord();
+    Dev_UpdateStatistics();
 }
 
 MainWindow::~MainWindow()
@@ -335,6 +336,29 @@ void MainWindow::Dev_UpdateNeckNotation()
         chordsStr += QString::fromStdString(chord.GetName());
     }
     ui->Dev_LineChordNames->setText(chordsStr);
+}
+
+void MainWindow::Dev_UpdateStatistics()
+{
+    int allKnownChordsNumber = 0;
+    int allChordDiagramNumber = 0;
+
+    // init all chords
+    for (auto& noteType : AllNoteTypes())
+    {
+        for (auto& chordType : AllChordsTypes())
+        {
+            allKnownChordsNumber++;
+            Chord chord = ChordFactory::GenerateChord(Note(noteType), chordType);
+            auto chordNotations = NotationReader::GetNeckNotation(chord);
+            allChordDiagramNumber += chordNotations.size();
+        }
+    }
+
+    ui->Dev_StatisticsChordNumber->setText("Database chord number: " +
+                                           QString::number(allKnownChordsNumber));
+    ui->Dev_StatisticsChordDiagramNumber->setText("Database diagram number: " +
+                                                   QString::number(allChordDiagramNumber));
 }
 
 void MainWindow::on_Dev_TestAllChordsValid_clicked()
