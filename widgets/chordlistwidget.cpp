@@ -27,6 +27,21 @@ void ChordListWidget::SetNeckList(const std::list<Neck> &neckLst, std::optional<
     for (auto &neck : neckLst)
     {
         auto widget = new ChordWidget(neck, baseNoteType, chordName);
+
+        // set tooltip
+        Chord neckChord = neck.toChord();
+        auto guessedChords = m_chordGuesser.Guess(neckChord);
+        QString guessedChordsStr;
+        for (const auto& chord : guessedChords)
+        {
+            if (!guessedChordsStr.isEmpty())
+            {
+                guessedChordsStr += " ";
+            }
+            guessedChordsStr += QString::fromStdString(chord.GetName());
+        }
+        widget->setToolTip(guessedChordsStr);
+
         m_widgets.push_back(widget);
     }
     UpdateWidgetsInLayout();

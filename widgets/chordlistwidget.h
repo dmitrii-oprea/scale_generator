@@ -10,6 +10,7 @@
 #include <QTimer>
 #include "neck/neck.h"
 #include "chordwidget.h"
+#include "chords/chordguesser.h"
 
 class ChordListWidget : public QFrame
 {
@@ -32,6 +33,7 @@ private:
     QVBoxLayout *m_mainLayout = nullptr;
     std::list<ChordWidget*> m_widgets;
     QTimer m_resizeTimer;
+    ChordGuesser m_chordGuesser;
 };
 
 #endif // CHORDLISTWIDGET_H
