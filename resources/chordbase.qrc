@@ -338,5 +338,16 @@
         <file>chordbase/G#/G#sus4addb6.txt</file>
         <file>chordbase/F/Fmaj7add#11.txt</file>
         <file>chordbase/F/Fmaj7sus2.txt</file>
+        <file>chordbase/A/Amaj7add#11.txt</file>
+        <file>chordbase/A#/A#maj7add#11.txt</file>
+        <file>chordbase/B/Bmaj7add#11.txt</file>
+        <file>chordbase/C/Cmaj7add#11.txt</file>
+        <file>chordbase/C#/C#maj7add#11.txt</file>
+        <file>chordbase/D/Dmaj7add#11.txt</file>
+        <file>chordbase/D#/D#maj7add#11.txt</file>
+        <file>chordbase/E/Emaj7add#11.txt</file>
+        <file>chordbase/F#/F#maj7add#11.txt</file>
+        <file>chordbase/G/Gmaj7add#11.txt</file>
+        <file>chordbase/G#/G#maj7add#11.txt</file>
     </qresource>
 </RCC>
