@@ -18,6 +18,7 @@ enum class ScaleType
     Mixolydian,     // coldplay
     HarmonicMinor,
     DoubleHarmonic,
+    JapaneseInsen,
 
     CustomMushroomBlues // porcupine tree: up to downstair
 };

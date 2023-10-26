@@ -78,6 +78,13 @@ Scale ScaleFactory::GenerateScale(const Note &baseNote, ScaleType scaleType)
         result.AddNote(baseNote + 8);
         result.AddNote(baseNote + 11);
         break;
+    case ScaleType::JapaneseInsen:
+        result.AddNote(baseNote);
+        result.AddNote(baseNote + 1);
+        result.AddNote(baseNote + 5);
+        result.AddNote(baseNote + 7);
+        result.AddNote(baseNote + 10);
+        break;
     case ScaleType::CustomMushroomBlues:
         result.AddNote(baseNote);
         result.AddNote(baseNote + 3);

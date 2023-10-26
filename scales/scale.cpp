@@ -12,7 +12,8 @@ const std::vector<ScaleType>& AllScaleTypes()
         ScaleType::Mixolydian,
         ScaleType::HarmonicMinor,
         ScaleType::DoubleHarmonic,
-        ScaleType::CustomMushroomBlues
+        ScaleType::CustomMushroomBlues,
+        ScaleType::JapaneseInsen
     };
     return allScaleTypes;
 }
@@ -29,6 +30,7 @@ std::string ScaleTypeToString(ScaleType type)
     case ScaleType::Mixolydian: return "Mixolydian";
     case ScaleType::HarmonicMinor: return "Harmonic minor";
     case ScaleType::DoubleHarmonic: return "Double harmonic";
+    case ScaleType::JapaneseInsen: return "Japanese insen";
     case ScaleType::CustomMushroomBlues: return "Custom - mushroom blues";
     }
     return std::string();
