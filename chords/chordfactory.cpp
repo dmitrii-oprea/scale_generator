@@ -6,10 +6,6 @@ std::list<int> ChordFactory::GenerateChordOffsets(ChordType chordType)
     std::list<int> result;
     switch (chordType)
     {
-    case ChordType::_5:
-        result.push_back(0);
-        result.push_back(7);
-        break;
     case ChordType::Major:
         result.push_back(0);
         result.push_back(4);
@@ -19,6 +15,14 @@ std::list<int> ChordFactory::GenerateChordOffsets(ChordType chordType)
         result.push_back(0);
         result.push_back(3);
         result.push_back(7);
+        break;
+    case ChordType::_5:
+        result.push_back(0);
+        result.push_back(7);
+        break;
+    case ChordType::_5b5:
+        result.push_back(0);
+        result.push_back(6);
         break;
     case ChordType::Dim:
         result.push_back(0);

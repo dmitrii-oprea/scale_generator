@@ -360,5 +360,17 @@
         <file>chordbase/F#/F#maj7sus2.txt</file>
         <file>chordbase/G/Gmaj7sus2.txt</file>
         <file>chordbase/G#/G#maj7sus2.txt</file>
+        <file>chordbase/A/A5b5.txt</file>
+        <file>chordbase/A#/A#5b5.txt</file>
+        <file>chordbase/B/B5b5.txt</file>
+        <file>chordbase/C/C5b5.txt</file>
+        <file>chordbase/C#/C#5b5.txt</file>
+        <file>chordbase/D/D5b5.txt</file>
+        <file>chordbase/D#/D#5b5.txt</file>
+        <file>chordbase/E/E5b5.txt</file>
+        <file>chordbase/F/F5b5.txt</file>
+        <file>chordbase/F#/F#5b5.txt</file>
+        <file>chordbase/G/G5b5.txt</file>
+        <file>chordbase/G#/G#5b5.txt</file>
     </qresource>
 </RCC>

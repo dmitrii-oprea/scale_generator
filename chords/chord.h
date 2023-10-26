@@ -12,9 +12,10 @@
 
 enum class ChordType
 {
-    _5,
     Major,
     Minor,
+    _5,
+    _5b5,
     Dim,
     Dim7,
     Major6,

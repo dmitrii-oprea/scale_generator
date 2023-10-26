@@ -4,9 +4,10 @@ const std::vector<ChordType>& AllChordsTypes()
 {
     static std::vector<ChordType> allChords =
     {
-        ChordType::_5,
         ChordType::Major,
         ChordType::Minor,
+        ChordType::_5,
+        ChordType::_5b5,
         ChordType::Dim,
         ChordType::Dim7,
         ChordType::Major6,
@@ -42,9 +43,10 @@ std::string ChordTypeToString(ChordType type)
 {
     switch (type)
     {
-    case ChordType::_5: return "5";
     case ChordType::Major: return "major";
     case ChordType::Minor: return "minor";
+    case ChordType::_5: return "5";
+    case ChordType::_5b5: return "5b5";
     case ChordType::Dim: return "dim";
     case ChordType::Dim7: return "dim7";
     case ChordType::Major6: return "major 6";
@@ -80,9 +82,10 @@ std::string ChordTypeToSuffixString(ChordType type)
 {
     switch (type)
     {
-    case ChordType::_5: return "5";
     case ChordType::Major: return "";
     case ChordType::Minor: return "m";
+    case ChordType::_5: return "5";
+    case ChordType::_5b5: return "5b5";
     case ChordType::Dim: return "dim";
     case ChordType::Dim7: return "dim7";
     case ChordType::Major6: return "6";
