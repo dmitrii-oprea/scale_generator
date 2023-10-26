@@ -349,5 +349,16 @@
         <file>chordbase/F#/F#maj7add#11.txt</file>
         <file>chordbase/G/Gmaj7add#11.txt</file>
         <file>chordbase/G#/G#maj7add#11.txt</file>
+        <file>chordbase/A/Amaj7sus2.txt</file>
+        <file>chordbase/A#/A#maj7sus2.txt</file>
+        <file>chordbase/B/Bmaj7sus2.txt</file>
+        <file>chordbase/C/Cmaj7sus2.txt</file>
+        <file>chordbase/C#/C#maj7sus2.txt</file>
+        <file>chordbase/D/Dmaj7sus2.txt</file>
+        <file>chordbase/D#/D#maj7sus2.txt</file>
+        <file>chordbase/E/Emaj7sus2.txt</file>
+        <file>chordbase/F#/F#maj7sus2.txt</file>
+        <file>chordbase/G/Gmaj7sus2.txt</file>
+        <file>chordbase/G#/G#maj7sus2.txt</file>
     </qresource>
 </RCC>
