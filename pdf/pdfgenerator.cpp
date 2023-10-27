@@ -182,7 +182,7 @@ void PDFGenerator::PrintSelectedNotes(QPainter &painter, const QPoint &point,
 void PDFGenerator::PrintChordTableItem(QPainter &painter, const QPoint &point, const Chord &chord)
 {
     QFont fontMainNote;
-    fontMainNote.setPixelSize(35);
+    fontMainNote.setPixelSize(25);
     fontMainNote.setBold(true);
 
     QFont fontNoteVisualizer;
@@ -243,7 +243,7 @@ void PDFGenerator::PrintChordNotation(QPainter &painter, const QPoint &point,
     int y = point.y();
 
     QFont fontNoteVisualizer;
-    fontNoteVisualizer.setPixelSize(25);
+    fontNoteVisualizer.setPixelSize(20);
     fontNoteVisualizer.setBold(true);
     painter.setPen(Qt::black);
     painter.setFont(fontNoteVisualizer);
