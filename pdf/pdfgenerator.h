@@ -12,6 +12,7 @@ class PDFGenerator
 {
 public:  
     static QString GenerateScaleReport(NoteType baseNote, ScaleType scaleType);
+    static QString GenerateAllChords();
 
 private:
     static void PrintSelectedNotes(QPainter &painter, const QPoint &point,

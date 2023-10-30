@@ -19,9 +19,7 @@ public:
 
 private slots:
     void on_Dev_TestAllChordsValid_clicked();
-
     void on_ScaleGenerator_GenerateScalePDF_clicked();
-
     void on_ChordDatabase_GenerateAllChordsPDF_clicked();
 
 private:

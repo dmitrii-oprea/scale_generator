@@ -134,7 +134,71 @@ QString PDFGenerator::GenerateScaleReport(NoteType baseNote, ScaleType scaleType
 
     // done
     painter.end();
-    //LogPrinterStatus(printer);
+    return printer.outputFileName();
+}
+
+QString PDFGenerator::GenerateAllChords()
+{
+    // init all chords
+    std::list<Chord> allKnownChords;
+    for (auto& noteType : AllNoteTypes())
+    {
+        for (auto& chordType : AllChordsTypes())
+        {
+            Chord chord = ChordFactory::GenerateChord(Note(noteType), chordType);
+            allKnownChords.push_back(chord);
+        }
+    }
+
+    // create pdf printer
+    QPrinter printer;
+    printer.setPageSize(QPageSize(QSize(PAGE_WIDTH * PAGE_SCALE, PAGE_HEIGHT * PAGE_SCALE)));
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setOutputFileName("All chords.pdf");
+
+    QPainter painter(&printer);
+    painter.setRenderHint(QPainter::SmoothPixmapTransform);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHint(QPainter::TextAntialiasing);
+
+    // current printing position
+    int xPos = LEFT_MARGIN;
+    int yPos = TOP_MARGIN;
+
+    // separate chords by their bases
+
+    // 1. Create chord lists
+    std::unordered_map<NoteType, std::list<Chord>> separatedScaleChords;
+    for (const auto &nt : AllNoteTypes())
+    {
+        separatedScaleChords.insert({ nt, std::list<Chord>() });
+    }
+
+    // 2. separate chords
+    for (const auto &chord : allKnownChords)
+    {
+        auto baseNote = chord.GetBaseNote();
+        if (baseNote.has_value())
+        {
+            NoteType nt = baseNote.value().GetNoteType();
+            separatedScaleChords[nt].push_back(chord);
+        }
+    }
+
+    // print all chords (new page for every new note)
+    for (const auto &nt : AllNoteTypes())
+    {
+        auto &noteChords = separatedScaleChords[nt];
+        PrintChordNotation(painter, QPoint(xPos, yPos), noteChords, printer);
+
+        // new page
+        printer.newPage();
+        xPos = LEFT_MARGIN;
+        yPos = TOP_MARGIN;
+    }
+
+    // done
+    painter.end();
     return printer.outputFileName();
 }
 
@@ -311,25 +375,5 @@ void PDFGenerator::PrintChordNotation(QPainter &painter, const QPoint &point,
             }
         }
         chordNotationNewLine();
-    }
-}
-
-void PDFGenerator::LogPrinterStatus(QPrinter &printer)
-{
-    auto state = printer.printerState();
-    switch (state)
-    {
-    case QPrinter::PrinterState::Aborted:
-        qDebug() << "PrinterState = Aborted";
-        break;
-    case QPrinter::PrinterState::Active:
-        qDebug() << "PrinterState = Active";
-        break;
-    case QPrinter::PrinterState::Error:
-        qDebug() << "PrinterState = Error";
-        break;
-    case QPrinter::PrinterState::Idle:
-        qDebug() << "PrinterState = Idle";
-        break;
     }
 }

@@ -449,5 +449,9 @@ void MainWindow::on_ScaleGenerator_GenerateScalePDF_clicked()
 
 void MainWindow::on_ChordDatabase_GenerateAllChordsPDF_clicked()
 {
+    QString filename = PDFGenerator::GenerateAllChords();
+
+    // open file
+    QDesktopServices::openUrl(QUrl::fromLocalFile(filename));
 }
 
