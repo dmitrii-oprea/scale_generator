@@ -161,6 +161,11 @@ QString PDFGenerator::GenerateAllChords()
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setRenderHint(QPainter::TextAntialiasing);
 
+    // create fonts
+    QFont fontHeader;
+    fontHeader.setPixelSize(70);
+    fontHeader.setBold(true);
+
     // current printing position
     int xPos = LEFT_MARGIN;
     int yPos = TOP_MARGIN;
@@ -186,15 +191,28 @@ QString PDFGenerator::GenerateAllChords()
     }
 
     // print all chords (new page for every new note)
-    for (const auto &nt : AllNoteTypes())
+    auto allNoteTypes = AllNoteTypes();
+    for (auto noteTypesIt = allNoteTypes.begin(); noteTypesIt != allNoteTypes.end(); noteTypesIt++)
     {
+        const auto &nt = *noteTypesIt;
+
+        // print header
+        painter.setFont(fontHeader);
+        painter.drawText(xPos, yPos, QString::fromStdString(NoteTypeToString(nt)));
+        yPos += VERTICAL_SPACE;
+
         auto &noteChords = separatedScaleChords[nt];
         PrintChordNotation(painter, QPoint(xPos, yPos), noteChords, printer);
 
         // new page if need
-        printer.newPage();
-        xPos = LEFT_MARGIN;
-        yPos = TOP_MARGIN;
+        auto nextnoteTypesIt = noteTypesIt;
+        nextnoteTypesIt++;
+        if (nextnoteTypesIt != allNoteTypes.end())
+        {
+            printer.newPage();
+            xPos = LEFT_MARGIN;
+            yPos = TOP_MARGIN;
+        }
     }
 
     // done
