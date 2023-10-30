@@ -191,7 +191,7 @@ QString PDFGenerator::GenerateAllChords()
         auto &noteChords = separatedScaleChords[nt];
         PrintChordNotation(painter, QPoint(xPos, yPos), noteChords, printer);
 
-        // new page
+        // new page if need
         printer.newPage();
         xPos = LEFT_MARGIN;
         yPos = TOP_MARGIN;
@@ -313,8 +313,10 @@ void PDFGenerator::PrintChordNotation(QPainter &painter, const QPoint &point,
     painter.setFont(fontNoteVisualizer);
     QFontMetrics fontMetrics(fontNoteVisualizer);
 
-    for (const auto &chord : chords)
+    for (auto chordIt = chords.begin(); chordIt != chords.end(); chordIt++)
     {
+        auto &chord = *chordIt;
+
         // get all chord notations
         auto chordNotations = NotationReader::GetNeckNotation(chord);
         std::list<Neck> neckLst;
@@ -353,16 +355,17 @@ void PDFGenerator::PrintChordNotation(QPainter &painter, const QPoint &point,
                 y = TOP_MARGIN;
             }
         };
-        for (auto it = chordImages.begin(); it != chordImages.end(); ++it)
+        for (auto chordImagesIt = chordImages.begin(); chordImagesIt != chordImages.end(); ++chordImagesIt)
         {
-            const auto& img = *it;
+            const auto& img = *chordImagesIt;
             QImage scaledChordImage = img.toImage().scaledToHeight(CHORDS_NOTATION_CHORD_HEIGHT, Qt::TransformationMode::SmoothTransformation);
             painter.drawImage(x, y, scaledChordImage);
 
             x += scaledChordImage.width() + CHORDS_NOTATION_SPACE_HOR;
 
-            // check if next image has space to the right
-            auto nextIt = it;
+            // check if next image has space to the right,
+            // and draw as much as it can on the same line
+            auto nextIt = chordImagesIt;
             nextIt++;
             if (nextIt != chordImages.end())
             {
@@ -374,6 +377,13 @@ void PDFGenerator::PrintChordNotation(QPainter &painter, const QPoint &point,
                 }
             }
         }
-        chordNotationNewLine();
+
+        // if has more chords to draw, then go to the next line
+        auto nextChordIt = chordIt;
+        nextChordIt++;
+        if (nextChordIt != chords.end())
+        {
+            chordNotationNewLine();
+        }
     }
 }
