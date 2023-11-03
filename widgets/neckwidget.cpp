@@ -5,14 +5,19 @@
 #include <QClipboard>
 #include <list>
 
+#define SMALLER_IMAGE_COEF ((double)0.4)
+
 NeckWidget::NeckWidget(QWidget *parent)
     : QFrame(parent)
 {
     setMinimumHeight(100);
 
     // create context menu
-    actionCopyImage = new QAction("Copy image");
-    connect(actionCopyImage, &QAction::triggered, this, &NeckWidget::CopyImageToClipboard);
+    m_actionCopyImage = new QAction("Copy image");
+    connect(m_actionCopyImage, &QAction::triggered, this, &NeckWidget::CopyImageToClipboard);
+    m_actionCopyTrunkedImage = new QAction("Copy small truncked image");
+    connect(m_actionCopyTrunkedImage, &QAction::triggered, this, &NeckWidget::CopySmallTrunkedImage);
+
 
     m_drawRange = Drawer::GetDefaultFretRange();
 
@@ -95,7 +100,8 @@ void NeckWidget::mousePressEvent(QMouseEvent *event)
 void NeckWidget::contextMenuEvent(QContextMenuEvent *event)
 {
     QMenu menu(this);
-    menu.addAction(actionCopyImage);
+    menu.addAction(m_actionCopyImage);
+    menu.addAction(m_actionCopyTrunkedImage);
     menu.exec(event->globalPos());
 }
 
@@ -116,6 +122,19 @@ void NeckWidget::CopyImageToClipboard()
     if (image.isNull()) return;
 
     QApplication::clipboard()->setImage(image, QClipboard::Clipboard);
+}
+
+void NeckWidget::CopySmallTrunkedImage()
+{
+    auto drawRange = m_neck.GetNeckRangeTrunked();
+    auto chordImage = Drawer::GenerateNeckImage(m_neck, std::nullopt, drawRange);
+
+    // smaller size
+    chordImage = chordImage.scaled(m_neckPixmap.width() * SMALLER_IMAGE_COEF, m_neckPixmap.height() * SMALLER_IMAGE_COEF,
+                         Qt::AspectRatioMode::KeepAspectRatio,
+                         Qt::TransformationMode::SmoothTransformation);
+
+    QApplication::clipboard()->setImage(chordImage.toImage(), QClipboard::Clipboard);
 }
 
 NeckWidgetChordSelector::NeckWidgetChordSelector(QWidget *parent)

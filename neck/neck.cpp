@@ -147,6 +147,7 @@ std::pair<int, int> Neck::GetNeckRangeTrunked() const
 
     // corrections
     if (rangeTruncked.first <= 2) rangeTruncked.first = 0;
+    if (rangeTruncked.second > 15) rangeTruncked.second = 15;
 
     return rangeTruncked;
 }

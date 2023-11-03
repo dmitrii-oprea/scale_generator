@@ -19,7 +19,8 @@ protected:
     std::optional<NoteType> m_baseNote;
     std::pair<int, int> m_drawRange;
     QPixmap m_neckPixmap;
-    QAction *actionCopyImage;
+    QAction *m_actionCopyImage;
+    QAction *m_actionCopyTrunkedImage;
 
 public:
     explicit NeckWidget(QWidget* parent = nullptr);
@@ -40,6 +41,7 @@ protected:
 
     double GetScale(const QSize& resultImageSize) const;
     void CopyImageToClipboard();
+    void CopySmallTrunkedImage();
 };
 
 class NeckWidgetChordSelector : public NeckWidget
