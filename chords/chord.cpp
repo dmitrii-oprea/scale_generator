@@ -34,7 +34,8 @@ const std::vector<ChordType>& AllChordsTypes()
         ChordType::MajorAdds11,
         ChordType::_5Adds11,
         ChordType::MajorMaj7Adds11,
-        ChordType::MajorMaj7sus2
+        ChordType::MajorMaj7sus2,
+        ChordType::Major6add11
     };
     return allChords;
 }
@@ -74,6 +75,7 @@ std::string ChordTypeToString(ChordType type)
     case ChordType::_5Adds11: return "5 add#11";
     case ChordType::MajorMaj7Adds11: return "maj7 add#11";
     case ChordType::MajorMaj7sus2: return "maj7 sus2";
+    case ChordType::Major6add11: return "major 6 add11";
     }
     return std::string();
 }
@@ -113,6 +115,7 @@ std::string ChordTypeToSuffixString(ChordType type)
     case ChordType::_5Adds11: return "5add#11";
     case ChordType::MajorMaj7Adds11: return "maj7add#11";
     case ChordType::MajorMaj7sus2: return "maj7sus2";
+    case ChordType::Major6add11: return "6add11";
     }
     return std::string();
 }
