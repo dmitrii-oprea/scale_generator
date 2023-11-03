@@ -372,5 +372,11 @@
         <file>chordbase/F#/F#5b5.txt</file>
         <file>chordbase/G/G5b5.txt</file>
         <file>chordbase/G#/G#5b5.txt</file>
+        <file>chordbase/G/G6add11.txt</file>
+        <file>img/main_icon2.png</file>
+        <file>img/neck.png</file>
+        <file>img/neck_bw4.png</file>
+        <file>chordbase.qrc</file>
+        <file>images.qrc</file>
     </qresource>
 </RCC>
