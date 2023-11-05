@@ -378,5 +378,16 @@
         <file>img/neck_bw4.png</file>
         <file>chordbase.qrc</file>
         <file>images.qrc</file>
+        <file>chordbase/A/A6add11.txt</file>
+        <file>chordbase/A#/A#6add11.txt</file>
+        <file>chordbase/B/B6add11.txt</file>
+        <file>chordbase/C/C6add11.txt</file>
+        <file>chordbase/C#/C#6add11.txt</file>
+        <file>chordbase/D/D6add11.txt</file>
+        <file>chordbase/D#/D#6add11.txt</file>
+        <file>chordbase/E/E6add11.txt</file>
+        <file>chordbase/F/F6add11.txt</file>
+        <file>chordbase/F#/F#6add11.txt</file>
+        <file>chordbase/G#/G#6add11.txt</file>
     </qresource>
 </RCC>
