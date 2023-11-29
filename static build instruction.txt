@@ -1,0 +1,39 @@
+1. Install QT
+Download Qt Installer: https://www.qt.io/download-open-source
+During installation select extra:
+	Qt 6.6.1/MinGW 11.2.0
+	Qt 6.6.1/Sources
+	Developer and Designer Tools/MinGW 11.2.0
+	Developer and Designer Tools/CMake 3.27.7
+	Developer and Designer Tools/Ninja 1.10.2
+After installation check folder exists: D:\Qt\6.6.1\Src
+!!! In this example Qt is installed on drive D, double check the command and paths below! 
+
+2. Install Python 3
+
+2. Set environment variables:
+Add to PATH:
+	D:\Qt\Tools\CMake_64\bin
+	D:\Qt\Tools\Ninja
+	C:\Users\oprea\AppData\Local\Programs\Python\Python312
+	D:\Qt\Tools\mingw1120_64\bin
+
+3. Build and install static lib
+Go to D:\Qt\6.6.1\
+Create folder qt6-build
+Go to D:\Qt\6.6.1\qt6-build
+Run cmd, type:
+	SET MY_ROOT1=D:\Qt\6.6.1\Src
+	SET PATH=%MY_ROOT1%;%PATH%
+	D:\Qt\6.6.1\Src\configure.bat -static -release -prefix D:\Qt\6.6.1\qt6-build
+	cmake --build . --parallel
+	cmake --install .
+
+4. Configure Qt Creator
+Run QT Creator
+Menu -> Edit -> Preferences -> Kits
+Go to "Qt Versions" tab, click Add button, select qmake.exe in D:\Qt\6.6.1\qt6-build\bin, update the name with "Static", press Apply
+Go to "Kits" tab, select similar kit, duplicate it, choose Qt Version that you just created, press Apply
+
+5. Build
+Select static kit when configuring the project
