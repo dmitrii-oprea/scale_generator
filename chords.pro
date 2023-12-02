@@ -71,3 +71,8 @@ RESOURCES += \
 DISTFILES += \
     resources/chordbase/A/A.txt \
     resources/chordbase/A/Am.txt
+
+# static MinGW build
+CONFIG += static
+QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++ -lstdc++
+DEFINES += STATIC

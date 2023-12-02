@@ -1,3 +1,5 @@
+Static build with MinGW, make sure that configurator not using VS paths.
+
 1. Install QT
 Download Qt Installer: https://www.qt.io/download-open-source
 During installation select extra:
@@ -34,6 +36,14 @@ Run QT Creator
 Menu -> Edit -> Preferences -> Kits
 Go to "Qt Versions" tab, click Add button, select qmake.exe in D:\Qt\6.6.1\qt6-build\bin, update the name with "Static", press Apply
 Go to "Kits" tab, select similar kit, duplicate it, choose Qt Version that you just created, press Apply
+
+5. Pro file
+Add these lines to the end of .pro file. I might be important to add these lines to the very end of the file!
+
+# static MinGW build
+CONFIG += static
+QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++ -lstdc++
+DEFINES += STATIC
 
 5. Build
 Select static kit when configuring the project
