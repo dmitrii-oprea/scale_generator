@@ -580,6 +580,36 @@
           </property>
          </widget>
         </item>
+        <item row="5" column="1">
+         <layout class="QGridLayout" name="gridLayout_7" columnstretch="1,2">
+          <item row="0" column="1">
+           <widget class="QPushButton" name="Dev_CopyCustomChordImageButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Copy custom chord image (small)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="Dev_CopyCustomChordImageText">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Chord name</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
        </layout>
       </widget>
      </widget>
@@ -635,6 +665,7 @@
   </customwidget>
  </customwidgets>
  <resources>
+  <include location="resources/images.qrc"/>
   <include location="resources/images.qrc"/>
  </resources>
  <connections/>

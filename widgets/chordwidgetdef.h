@@ -1,0 +1,8 @@
+#ifndef CHORDWIDGETDEF_H
+#define CHORDWIDGETDEF_H
+
+#define MAX_WIDGET_HEIGHT ((double)(100))
+#define CHORD_EXTRA_HEIGHT (50)
+#define SMALLER_IMAGE_COEF ((double)0.4)
+
+#endif // CHORDWIDGETDEF_H

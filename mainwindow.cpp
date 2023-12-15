@@ -9,12 +9,15 @@
 #include "neck/neckencoder.h"
 #include "file/notationreader.h"
 #include "pdf/pdfgenerator.h"
+#include "draw/drawer.h"
+#include "widgets/chordwidgetdef.h"
 
 #include <unordered_map>
 #include <list>
 #include <QLayout>
 #include <QMessageBox>
 #include <QDesktopServices>
+#include <QClipboard>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -446,12 +449,52 @@ void MainWindow::on_ScaleGenerator_GenerateScalePDF_clicked()
     QDesktopServices::openUrl(QUrl::fromLocalFile(filename));
 }
 
-
 void MainWindow::on_ChordDatabase_GenerateAllChordsPDF_clicked()
 {
     QString filename = PDFGenerator::GenerateAllChords();
 
     // open file
     QDesktopServices::openUrl(QUrl::fromLocalFile(filename));
+}
+
+void MainWindow::on_Dev_CopyCustomChordImageButton_clicked()
+{
+    auto chordName = ui->Dev_CopyCustomChordImageText->text();
+    Neck neck = ui->Dev_ChordSelector->GetNeck();
+    auto drawRange = neck.GetNeckRangeTrunked();
+    auto neckPixmap = Drawer::GenerateNeckImage(neck, std::nullopt, drawRange);
+    QImage image = neckPixmap.toImage();
+    if (image.isNull()) return;
+
+    // font
+    QFont chordNameFont;
+    chordNameFont.setPixelSize(40);
+    chordNameFont.setBold(true);
+    QFontMetrics fm(chordNameFont);
+
+    // new image -> clear
+    QImage extendedImage(image.width(), image.height() + CHORD_EXTRA_HEIGHT, image.format());
+    QPainter painter(&extendedImage);
+    painter.setBrush(Qt::white);
+    painter.setPen(Qt::white);
+    painter.setFont(chordNameFont);
+    painter.drawRect(extendedImage.rect());
+
+    // draw chord
+    painter.drawImage(0, CHORD_EXTRA_HEIGHT, image);
+
+    // add chord name
+    painter.setPen(Qt::black);
+    int xPos = extendedImage.width() / 2 - fm.horizontalAdvance(chordName) / 2;
+    int yPos = fm.height() * 0.7;
+    painter.drawText(xPos, yPos, chordName);
+    painter.end();
+
+    // smaller size
+    extendedImage = extendedImage.scaled(extendedImage.width() * SMALLER_IMAGE_COEF, extendedImage.height() * SMALLER_IMAGE_COEF,
+                                         Qt::AspectRatioMode::KeepAspectRatio,
+                                         Qt::TransformationMode::SmoothTransformation);
+
+    QApplication::clipboard()->setImage(extendedImage, QClipboard::Clipboard);
 }
 

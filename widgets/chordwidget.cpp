@@ -1,5 +1,7 @@
 #include "chordwidget.h"
 #include "draw/drawer.h"
+#include "chordwidgetdef.h"
+
 #include <QAction>
 #include <QApplication>
 #include <QClipboard>
@@ -8,9 +10,7 @@
 #include <QPainter>
 #include <QFont>
 
-#define MAX_WIDGET_HEIGHT ((double)(100))
-#define CHORD_EXTRA_HEIGHT (50)
-#define SMALLER_IMAGE_COEF ((double)0.4)
+
 
 ChordWidget::ChordWidget(const Neck &neck, std::optional<NoteType> baseNote, const std::string &chordName, QWidget *parent)
     : QFrame(parent)

@@ -51,6 +51,7 @@ HEADERS += \
     widgets/chordlistwidget.h \
     widgets/chordtypewidget.h \
     widgets/chordwidget.h \
+    widgets/chordwidgetdef.h \
     widgets/neckwidget.h \
     widgets/notesvisualizerwidget.h \
     widgets/notetypewidget.h \

@@ -21,6 +21,7 @@ private slots:
     void on_Dev_TestAllChordsValid_clicked();
     void on_ScaleGenerator_GenerateScalePDF_clicked();
     void on_ChordDatabase_GenerateAllChordsPDF_clicked();
+    void on_Dev_CopyCustomChordImageButton_clicked();
 
 private:
     void ChordIdentifier_UpdateCompleteChords();
